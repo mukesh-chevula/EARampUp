@@ -12,7 +12,7 @@ import java.util.*;
 public class FileUserService {
 
     private final ObjectMapper mapper = new ObjectMapper();
-    private final File file = new File("data/Users.json");
+    private final File file = new File("app/data/Users.json");
     private List<User> cache = new ArrayList<>();
 
     public FileUserService() throws IOException {
