@@ -40,6 +40,23 @@ If you want to run the application itself locally but use MongoDB in Docker:
    ./gradlew bootRun
    ```
 
+## Testing
+
+### Running Tests Locally
+The project includes unit tests (for Service layer) and integration tests (for Controller layer). To run them:
+
+```bash
+./gradlew test
+```
+
+### Tests in Docker Build
+The `Dockerfile` is configured to run tests automatically during the build process. If any test fails, the container build will fail, preventing deployment of broken code.
+
+To verify this, simply run:
+```bash
+docker-compose build
+```
+
 ## Methods
 
 ### Create a User 
