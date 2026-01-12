@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.project04mongodb_crud.service.UserServiceTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-01-09T09:20:14.488Z" hostname="HYD-M-57013383" time="0.063">
+  <properties/>
+  <testcase name="findAll_ShouldReturnAllUsers()" classname="com.example.project04mongodb_crud.service.UserServiceTest" time="0.055"/>
+  <testcase name="update_ShouldReturnUpdatedUser_WhenUserExists()" classname="com.example.project04mongodb_crud.service.UserServiceTest" time="0.002"/>
+  <testcase name="delete_ShouldReturnTrue_WhenUserExists()" classname="com.example.project04mongodb_crud.service.UserServiceTest" time="0.001"/>
+  <testcase name="save_ShouldReturnSavedUser()" classname="com.example.project04mongodb_crud.service.UserServiceTest" time="0.001"/>
+  <testcase name="findById_ShouldReturnUser_WhenUserExists()" classname="com.example.project04mongodb_crud.service.UserServiceTest" time="0.001"/>
+  <testcase name="update_ShouldReturnNull_WhenUserDoesNotExist()" classname="com.example.project04mongodb_crud.service.UserServiceTest" time="0.001"/>
+  <testcase name="findById_ShouldThrowRuntimeException_WhenUserDoesNotExist()" classname="com.example.project04mongodb_crud.service.UserServiceTest" time="0.001"/>
+  <testcase name="delete_ShouldReturnFalse_WhenUserDoesNotExist()" classname="com.example.project04mongodb_crud.service.UserServiceTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

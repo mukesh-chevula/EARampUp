@@ -37,8 +37,8 @@ class UserControllerTest {
 
     @BeforeEach
     void setUp() {
-        user1 = new User("1", "Mukesh", "Ch", "EA", 24, "1234567890");
-        user2 = new User("2", "Daivik", "B", "Qualcomm", 36, "0987654321");
+        user1 = new User("696489df058b141ca4fcba93", "Daivik", "B", "Amazon", 5, "3456789012");
+        user2 = new User("696489eb058b141ca4fcba94", "Mukesh", "CH", "EA", 5, "3456789012");
     }
 
     @Test
@@ -49,18 +49,18 @@ class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.size()").value(2))
-                .andExpect(jsonPath("$[0].firstName").value("John"))
-                .andExpect(jsonPath("$[1].firstName").value("Jane"));
+                .andExpect(jsonPath("$[0].firstName").value("Daivik"))
+                .andExpect(jsonPath("$[1].firstName").value("Mukesh"));
     }
 
     @Test
     void getUser_ShouldReturnUser_WhenFound() throws Exception {
-        when(service.findById("1")).thenReturn(user1);
+        when(service.findById("696489df058b141ca4fcba93")).thenReturn(user1);
 
-        mockMvc.perform(get("/users/1"))
+        mockMvc.perform(get("/users/696489df058b141ca4fcba93"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.userId").value("1"))
-                .andExpect(jsonPath("$.firstName").value("John"));
+                .andExpect(jsonPath("$.userId").value("696489df058b141ca4fcba93"))
+                .andExpect(jsonPath("$.firstName").value("Daivik"));
     }
 
     @Test
@@ -71,27 +71,27 @@ class UserControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(user1)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.userId").value("1"))
-                .andExpect(jsonPath("$.firstName").value("John"));
+                .andExpect(jsonPath("$.userId").value("696489df058b141ca4fcba93"))
+                .andExpect(jsonPath("$.firstName").value("Daivik"));
     }
 
     @Test
     void updateUser_ShouldReturnUpdatedUser() throws Exception {
-        when(service.update(eq("1"), any(User.class))).thenReturn(user1);
+        when(service.update(eq("696489df058b141ca4fcba93"), any(User.class))).thenReturn(user1);
 
-        mockMvc.perform(put("/users/1")
+        mockMvc.perform(put("/users/696489df058b141ca4fcba93")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(user1)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.userId").value("1"))
-                .andExpect(jsonPath("$.firstName").value("John"));
+                .andExpect(jsonPath("$.userId").value("696489df058b141ca4fcba93"))
+                .andExpect(jsonPath("$.firstName").value("Daivik"));
     }
 
     @Test
     void deleteUser_ShouldReturnTrue_WhenDeleted() throws Exception {
-        when(service.delete("1")).thenReturn(true);
+        when(service.delete("696489df058b141ca4fcba93")).thenReturn(true);
 
-        mockMvc.perform(delete("/users/1"))
+        mockMvc.perform(delete("/users/696489df058b141ca4fcba93"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("true"));
     }

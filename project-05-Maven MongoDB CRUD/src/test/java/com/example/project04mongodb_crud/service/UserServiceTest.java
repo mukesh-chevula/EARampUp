@@ -31,8 +31,8 @@ class UserServiceTest {
 
     @BeforeEach
     void setUp() {
-        user1 = new User("1", "Mukesh", "Ch", "EA", 24, "1234567890");
-        user2 = new User("2", "Daivik", "B", "Qualcomm", 36, "0987654321");
+        user1 = new User("696489df058b141ca4fcba93", "Daivik", "B", "Amazon", 5, "3456789012");
+        user2 = new User("696489eb058b141ca4fcba94", "Mukesh", "CH", "EA", 5, "3456789012");
     }
 
     @Test
@@ -47,12 +47,12 @@ class UserServiceTest {
 
     @Test
     void findById_ShouldReturnUser_WhenUserExists() {
-        when(repo.findById("1")).thenReturn(Optional.of(user1));
+        when(repo.findById("696489df058b141ca4fcba93")).thenReturn(Optional.of(user1));
 
-        User result = service.findById("1");
+        User result = service.findById("696489df058b141ca4fcba93");
 
         assertNotNull(result);
-        assertEquals("John", result.getFirstName());
+        assertEquals("Daivik", result.getFirstName());
     }
 
     @Test
@@ -69,30 +69,30 @@ class UserServiceTest {
         User result = service.save(user1);
 
         assertNotNull(result);
-        assertEquals("1", result.getUserId());
+        assertEquals("696489df058b141ca4fcba93", result.getUserId());
         verify(repo, times(1)).save(user1);
     }
 
     @Test
     void update_ShouldReturnUpdatedUser_WhenUserExists() {
-        User updatedInfo = new User("1", "John", "Doe", "New Corp", 30, "1111111111");
+        User updatedInfo = new User("696489df058b141ca4fcba93", "Daivik", "B", "Google", 8, "3456789012");
         
-        when(repo.findById("1")).thenReturn(Optional.of(user1));
+        when(repo.findById("696489df058b141ca4fcba93")).thenReturn(Optional.of(user1));
         when(repo.save(any(User.class))).thenReturn(updatedInfo);
         
-        User result = service.update("1", updatedInfo);
+        User result = service.update("696489df058b141ca4fcba93", updatedInfo);
 
         assertNotNull(result);
-        assertEquals("New Corp", result.getCompanyName());
-        assertEquals(30, result.getExperienceMonths());
+        assertEquals("Google", result.getCompanyName());
+        assertEquals(8, result.getExperienceMonths());
         verify(repo, times(1)).save(any(User.class));
     }
 
     @Test
     void update_ShouldReturnNull_WhenUserDoesNotExist() {
-        when(repo.findById("99")).thenReturn(Optional.empty());
+        when(repo.findById("999999")).thenReturn(Optional.empty());
 
-        User result = service.update("99", user1);
+        User result = service.update("999999", user1);
 
         assertNull(result);
         verify(repo, never()).save(any(User.class));
@@ -100,21 +100,22 @@ class UserServiceTest {
 
     @Test
     void delete_ShouldReturnTrue_WhenUserExists() {
-        when(repo.existsById("1")).thenReturn(true);
+        when(repo.existsById("696489df058b141ca4fcba93")).thenReturn(true);
+        doNothing().when(repo).deleteById("696489df058b141ca4fcba93");
 
-        Boolean result = service.delete("1");
+        boolean result = service.delete("696489df058b141ca4fcba93");
 
         assertTrue(result);
-        verify(repo, times(1)).deleteById("1");
+        verify(repo, times(1)).deleteById("696489df058b141ca4fcba93");
     }
 
     @Test
     void delete_ShouldReturnFalse_WhenUserDoesNotExist() {
-        when(repo.existsById("99")).thenReturn(false);
+        when(repo.existsById("999999")).thenReturn(false);
 
-        Boolean result = service.delete("99");
+        boolean result = service.delete("999999");
 
         assertFalse(result);
-        verify(repo, never()).deleteById("99");
+        verify(repo, never()).deleteById(any());
     }
 }
