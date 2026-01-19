@@ -1,0 +1,45 @@
+version: '3.8'
+services:
+  # Spring Boot Application Service
+  app:
+    user : root
+    build: . # Builds the image using the Dockerfile in the current directory
+    container_name: mongodb-crud
+    ports:
+      - "8080:8080" # Maps host port 8080 to container port 8080
+    depends_on:
+      mongodb:
+        condition: service_healthy # Ensures MongoDB starts first matches healthcheck
+    networks:
+      - spring-mongo-network
+
+  # MongoDB Database Service
+  mongodb:
+    image: mongo:latest # Uses the official MongoDB image from Docker Hub
+    container_name: mongo-db-container
+    ports:
+      - "27017:27017" # Maps host port 27017 to container port 27017
+    environment:
+      # Set up initial admin credentials for MongoDB
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_DATABASE: usersdb
+    volumes:
+      - mongo-data:/data/db # Persists data to a Docker volume
+    networks:
+      - spring-mongo-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+# Define volumes and networks
+volumes:
+  mongo-data:
+    driver: local
+
+networks:
+  spring-mongo-network:
+    driver: bridge
