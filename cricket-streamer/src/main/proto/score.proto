@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option java_package = "com.example.grpc";
+option java_multiple_files = true;
+
+service ScoreService {
+  rpc StreamScore(StreamRequest) returns (stream ScoreUpdate);
+}
+
+message StreamRequest {}
+
+message ScoreUpdate {
+  int32 over = 1;
+  int32 ball = 2;
+  int32 runs = 3;
+  int32 total = 4;
+  int32 wickets = 5;
+  string comment = 6;
+  int32 innings = 7;
+  int32 target = 8;
+  string status = 9;
+}
