@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.example.chat.grpc";
+option java_outer_classname = "ChatProto";
+
+package com.example.chat;
+
+// Chat Service with bidirectional streaming
+service ChatService {
+  // Bidirectional streaming RPC for chat
+  rpc Chat(stream ChatMessage) returns (stream ChatMessage);
+}
+
+// Message structure
+message ChatMessage {
+  string id = 1;
+  string username = 2;
+  string message = 3;
+  int64 timestamp = 4;
+}
