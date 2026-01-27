@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.demo.grpc";
+option java_outer_classname = "UserProto";
+
+service UserService {
+  rpc CreateUser(stream UserField) returns (UserResponse);
+  rpc UpdateUser(stream UserField) returns (UserResponse);
+  rpc DeleteUser(stream UserField) returns (UserResponse);
+  rpc GetUser(UserRequest) returns (User);
+  rpc GetAllUsers(Empty) returns (Users);
+}
+
+message UserField {
+  string field = 1; // firstname, lastname, email, phone, id etc
+  string value = 2;
+}
+
+message UserRequest {
+  string id = 1;
+}
+
+message UserResponse {
+  string status = 1;
+  string message = 2;
+}
+
+message User {
+  string id = 1;
+  string firstname = 2;
+  string lastname = 3;
+  string email = 4;
+  string phone = 5;
+}
+
+message Users {
+  repeated User users = 1;
+}
+
+message Empty {}

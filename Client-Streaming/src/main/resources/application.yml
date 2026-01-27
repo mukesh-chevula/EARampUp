@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: client-streaming
+  cassandra:
+    contact-points: localhost
+    port: 9042
+    local-datacenter: datacenter1
+    keyspace-name: userkeyspace
+    schema-action: create_if_not_exists
+
+grpc:
+  server:
+    port: 9090

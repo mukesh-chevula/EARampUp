@@ -1,0 +1,80 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '4.0.2'
+    id 'io.spring.dependency-management' version '1.1.7'
+    id 'com.google.protobuf' version '0.9.5'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+description = 'Client-Streaming'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    set('springGrpcVersion', "1.0.1")
+    set('grpcVersion', "1.68.1")
+    set('protobufVersion', "3.25.3")
+}
+
+dependencies {
+    implementation platform("io.grpc:grpc-bom:${grpcVersion}")
+    implementation "io.grpc:grpc-netty-shaded"
+    implementation "io.grpc:grpc-protobuf"
+    implementation "io.grpc:grpc-stub"
+    implementation "org.springframework.boot:spring-boot-starter-data-cassandra"
+    implementation "io.grpc:grpc-services"
+    implementation 'org.springframework.grpc:spring-grpc-spring-boot-starter'
+    implementation "org.projectlombok:lombok:1.18.30"
+    annotationProcessor "org.projectlombok:lombok:1.18.30"
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-cassandra-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-data-cassandra-test'
+    testImplementation 'org.springframework.grpc:spring-grpc-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.grpc:spring-grpc-dependencies:${springGrpcVersion}"
+    }
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:${protobufVersion}"
+    }
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {
+                option '@generated=omit'
+            }
+        }
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs 'build/generated/source/proto/main/java'
+            srcDirs 'build/generated/source/proto/main/grpc'
+        }
+    }
+}
